@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  PORTFOLIO / CV  —  Trịnh Công Trường (Warehouse Supervisor)
+  ----------------------------------------------------------------------------
+  CẤU TRÚC FILE:
+    • index.html   →  bố cục trang (file này — thường không cần sửa)
+    • styles.css   →  giao diện / màu sắc (không cần sửa)
+    • data.js      →  TOÀN BỘ NỘI DUNG song ngữ  ←★ CHỈ SỬA FILE NÀY
+    • app.js       →  bộ khởi chạy (không cần sửa)
+    • assets/      →  ảnh chân dung, ảnh gallery, và 2 file CV PDF
+  Triển khai: đẩy cả thư mục lên GitHub Pages / Vercel, hoặc mở trực tiếp
+  index.html bằng trình duyệt để xem.
+  ============================================================================
+-->
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trịnh Công Trường — Warehouse Supervisor</title>
+<meta name="description" content="Trịnh Công Trường — Warehouse & Logistics Operations Supervisor. Nearly 7 years across multinational manufacturing and 3PL environments." />
+
+<!-- Fonts: Sora (tiêu đề) · IBM Plex Sans (nội dung, hỗ trợ tiếng Việt) · IBM Plex Mono (số liệu) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap&subset=latin,latin-ext,vietnamese" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+<!-- Thanh tiến trình cuộn -->
+<div id="progress" aria-hidden="true"></div>
+
+<!-- ========================================================================
+     NAVBAR (cố định khi cuộn)
+     ===================================================================== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#home" class="brand" aria-label="Trịnh Công Trường — home">
+      <span class="brand-mark">TT</span>
+      <span class="brand-name">Trịnh Công Trường<small data-bind="hero.role">Warehouse Supervisor</small></span>
+    </a>
+
+    <nav class="nav-right" aria-label="Primary">
+      <div class="nav-links" id="navLinks">
+        <a href="#home"       data-bind="nav.home">Home</a>
+        <a href="#about"      data-bind="nav.about">About</a>
+        <a href="#experience" data-bind="nav.experience">Experience</a>
+        <a href="#skills"     data-bind="nav.skills">Skills</a>
+        <a href="#gallery"    data-bind="nav.gallery">Gallery</a>
+        <a href="#contact"    data-bind="nav.contact">Contact</a>
+      </div>
+
+      <!-- Nút chuyển ngôn ngữ (luôn hiển thị, kể cả trên mobile) -->
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="vi" aria-pressed="true">VI</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ========================================================================
+     HERO  (tên · chức danh · trạng thái · Tải CV · Liên hệ)
+     ===================================================================== -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <!-- TAG TRẠNG THÁI LÀM VIỆC (màu đổi theo data.js: working = xanh, open = xanh lá) -->
+        <span class="status-tag is-working" id="statusTag">
+          <span class="sdot" aria-hidden="true"></span><span id="statusText"></span>
+        </span>
+
+        <span class="eyebrow hero-eyebrow" data-bind="hero.eyebrow">Warehouse &amp; Logistics Operations</span>
+        <h1 data-bind="hero.name">Trịnh Công Trường</h1>
+        <div class="hero-role" data-bind="hero.role">Warehouse Supervisor</div>
+        <p class="hero-intro" data-bind="hero.intro"></p>
+
+        <div class="hero-cta">
+          <!-- NÚT TẢI CV → trỏ tới file PDF theo ngôn ngữ (xem data.js → profile.cv) -->
+          <a id="cvBtn" class="btn btn--primary" href="#" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v11M8 11l4 4 4-4M5 19h14"/></svg>
+            <span data-bind="hero.btnCV">Download CV</span>
+          </a>
+          <a href="#contact" class="btn btn--ghost" data-bind="hero.btnContact">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="hero-portrait">
+        <div class="portrait">
+          <img id="profilePhoto" src="" alt="Trịnh Công Trường" onerror="this.style.display='none'">
+          <div class="portrait-badge"><span class="dot"></span><span data-bind="ui.badgeLocation">HCMC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dải KPI (số tự đếm lên khi cuộn tới) -->
+  <div class="container">
+    <div class="kpi-strip" id="kpiStrip"><!-- app.js render --></div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     ABOUT
+     ===================================================================== -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-bind="about.eyebrow">01 — About</span>
+      <h2 class="section-title" data-bind="about.title">Operations leadership, grounded in data</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <div id="aboutSummary"><!-- app.js render --></div>
+        <div class="objective">
+          <span class="eyebrow" data-bind="about.objectiveLabel">Career objective</span>
+          <p data-bind="about.objective"></p>
+        </div>
+      </div>
+
+      <aside class="reveal">
+        <!-- Học vấn & chứng chỉ -->
+        <div class="side-card">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+            <span data-bind="about.eduTitle">Education &amp; Certifications</span>
+          </h3>
+          <div class="edu-org" id="eduOrg"></div>
+          <ul class="edu-list" id="eduList"><!-- app.js render --></ul>
+        </div>
+
+        <!-- Ngôn ngữ -->
+        <div class="side-card">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2c3 3 3 17 0 20M12 2c-3 3-3 17 0 20"/></svg>
+            <span data-bind="about.langTitle">Languages</span>
+          </h3>
+          <div id="langList"><!-- app.js render --></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     EXPERIENCE (timeline)
+     ===================================================================== -->
+<section id="experience" class="section section--dark">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-bind="experience.eyebrow">02 — Experience</span>
+      <h2 class="section-title" data-bind="experience.title">A track record across 3PL &amp; manufacturing</h2>
+      <p class="section-lead" data-bind="experience.lead"></p>
+    </div>
+    <div class="timeline" id="timeline"><!-- app.js render --></div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     SKILLS / COMPETENCIES
+     ===================================================================== -->
+<section id="skills" class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-bind="skills.eyebrow">03 — Capabilities</span>
+      <h2 class="section-title" data-bind="skills.title">Core competencies</h2>
+      <p class="section-lead" data-bind="skills.lead"></p>
+    </div>
+
+    <div class="comp-grid" id="compGrid"><!-- app.js render --></div>
+
+    <div class="systems reveal">
+      <span class="eyebrow" data-bind="skills.systemsLabel">Systems &amp; tools</span>
+      <div class="chips" id="systemsChips"><!-- app.js render --></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     GALLERY
+     ===================================================================== -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-bind="gallery.eyebrow">04 — Gallery</span>
+      <h2 class="section-title" data-bind="gallery.title">On the floor</h2>
+      <p class="section-lead" data-bind="gallery.lead"></p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"><!-- app.js render --></div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     CONTACT
+     ===================================================================== -->
+<section id="contact" class="section section--dark">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-bind="contact.eyebrow">05 — Contact</span>
+      <h2 class="section-title" data-bind="contact.title">Let’s talk operations</h2>
+      <p class="section-lead" data-bind="contact.lead"></p>
+    </div>
+
+    <div class="contact-grid">
+      <form id="contactForm" class="reveal" novalidate>
+        <div class="field">
+          <label for="cName" data-bind="contact.form.name">Your name</label>
+          <input id="cName" name="name" type="text" required data-bind-ph="contact.form.namePh">
+        </div>
+        <div class="field">
+          <label for="cEmail" data-bind="contact.form.email">Email</label>
+          <input id="cEmail" name="email" type="email" required data-bind-ph="contact.form.emailPh">
+        </div>
+        <div class="field">
+          <label for="cSubject" data-bind="contact.form.subject">Subject</label>
+          <input id="cSubject" name="subject" type="text" data-bind-ph="contact.form.subjectPh">
+        </div>
+        <div class="field">
+          <label for="cMsg" data-bind="contact.form.message">Message</label>
+          <textarea id="cMsg" name="message" required data-bind-ph="contact.form.messagePh"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary">
+          <span data-bind="contact.form.send">Send message</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+
+      <div class="contact-card reveal">
+        <a class="cinfo" id="emailLink" href="#">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></span>
+          <span><span class="lbl" data-bind="contact.labels.email">Email</span><span class="val" id="emailVal"></span></span>
+        </a>
+        <a class="cinfo" id="phoneLink" href="#">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 4.2 2 2 0 014 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0122 16.9z"/></svg></span>
+          <span><span class="lbl" data-bind="contact.labels.phone">Phone</span><span class="val" id="phoneVal"></span></span>
+        </a>
+        <div class="cinfo">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span><span class="lbl" data-bind="contact.labels.location">Location</span><span class="val" id="locVal"></span></span>
+        </div>
+
+        <div class="socials">
+          <a id="linkLinkedin" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 102.5 6 2.5 2.5 0 004.98 3.5zM3 8.98h4V21H3zM9 8.98h3.8v1.64h.05a4.17 4.17 0 013.75-2.06C20.5 8.56 22 10.6 22 14.13V21h-4v-6.08c0-1.45-.03-3.32-2.02-3.32S13.6 13.2 13.6 14.82V21H9z"/></svg>
+          </a>
+          <a id="linkEmail" href="#" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+          </a>
+          <a id="linkPhone" href="#" aria-label="Call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012 4.2 2 2 0 014 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0122 16.9z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================================================================
+     FOOTER
+     ===================================================================== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="copy">© <span id="year"></span> Trịnh Công Trường · <span data-bind="footer.tag">Warehouse &amp; Logistics Operations</span></span>
+    <div class="footer-links">
+      <a href="#about"      data-bind="nav.about">About</a>
+      <a href="#experience" data-bind="nav.experience">Experience</a>
+      <a href="#contact"    data-bind="nav.contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================================================
+     LIGHTBOX (xem ảnh phóng to)
+     ===================================================================== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <figure>
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+</div>
+
+<!-- ★ NỘI DUNG (sửa ở đây) rồi ★ BỘ KHỞI CHẠY. data.js phải nạp TRƯỚC app.js. -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
