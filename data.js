@@ -67,7 +67,6 @@ window.SITE_DATA = {
   kpis: [
     { value: 7,   suffix: "+", label: { vi: "Năm kinh nghiệm vận hành",        en: "Years in operations" } },
     { value: 5,   suffix: "",  label: { vi: "Doanh nghiệp đa quốc gia & 3PL",  en: "Multinational & 3PL employers" } },
-    { value: 100, suffix: "%", label: { vi: "Độ chính xác tồn kho cao nhất",   en: "Peak inventory accuracy" } },
     { value: 30,  suffix: "+", label: { vi: "Nhân sự kho đã quản lý",          en: "Warehouse staff led" } }
   ],
 
